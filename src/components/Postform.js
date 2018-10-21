@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
 
 class Postform extends Component {
+  // why using constructor?
   constructor(props) {
     super(props)
+
+    // why state should goes here?
     this.state = {
       title: '',
       body: ''
     }
 
+    // why doing this?
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   onChange(e) {
+    // now you get the input[type=name]
+    // BUT...how do i get data-name="" and other attributes/properties?
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -22,7 +28,7 @@ class Postform extends Component {
     e.preventDefault()
 
     const post = {
-      title: this.state.title,
+      title: this.state.title, // getting state value
       body: this.state.body
     }
 
@@ -48,8 +54,8 @@ class Postform extends Component {
             <input
               type="text"
               name="title"
-              onChange={this.onChange}
-              value={this.state.title}
+              onChange={this.onChange} // binding event
+              value={this.state.title} // binding value
             />
           </div>
           <div>
