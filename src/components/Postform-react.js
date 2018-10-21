@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropsTypes from 'prop-types'
-
-import { createPost } from '../actions/postActions'
 
 class Postform extends Component {
+  // why using constructor?
   constructor(props) {
     super(props)
 
-    // 使用 redux 后，为什么不把这里是 state 移到 redux ?!
-    // 什么样的 state 可以不放在 store, 而应该把它们放在 component ?
+    // why state should goes here?
     this.state = {
       title: '',
       body: ''
@@ -36,8 +32,15 @@ class Postform extends Component {
       body: this.state.body
     }
 
-    // call action
-    this.props.createPost(post)
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(post)
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
   }
 
   render() {
@@ -75,12 +78,4 @@ class Postform extends Component {
   }
 }
 
-// property check
-Postform.propTypes = {
-  createPost: PropsTypes.func.isRequired
-}
-
-export default connect(
-  null, // 为什么可以是 null ?
-  { createPost }
-)(Postform)
+export default Postform
